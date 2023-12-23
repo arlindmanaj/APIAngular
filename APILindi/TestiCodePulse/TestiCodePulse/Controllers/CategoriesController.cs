@@ -125,5 +125,33 @@ namespace TestiCodePulse.Controllers
             };
             return Ok(response);
         }
+
+        // Delete : https://localhost:7112/api/Categories{id}
+        [HttpDelete]
+        [Route("{id:Guid}")]
+
+        public async Task<IActionResult> DeleteCategory([FromRoute]Guid id)
+        {
+            var category = await categoryRepository.DeleteAsync(id);
+            if (category is null)
+            {
+                return NotFound();
+
+            }
+            //Nese eshte found convert domain to dto model
+
+            var response = new CategoryDto
+            {
+
+                Id = category.Id,
+                Name = category.Name,
+                UrlHandle = category.UrlHandle
+            };
+            
+                
+            
+            return Ok(response);
+        }
+
     }
 }
