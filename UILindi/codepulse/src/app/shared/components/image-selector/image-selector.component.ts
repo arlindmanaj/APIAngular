@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ImageService } from './image.service';
-import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-image-selector',
   imports: [],
@@ -20,6 +20,8 @@ export class ImageSelectorComponent {
   onFileUploadChange(event: Event): void {
     const element = event.currentTarget as HTMLInputElement;
     this.file = element.files?.[0];
+
+    
   }
 
   uploadImage(): void {
