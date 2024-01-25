@@ -19,6 +19,7 @@ namespace TestiCodePulse.Controllers
             this.blogPostRepository = blogPostRepository;
             this.categoryRepository = categoryRepository;
         }
+
         //POST : {apibaseurl}/api/blogposts
         [HttpPost]
 

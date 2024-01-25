@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { CategoryService } from '../../category/services/category.service';
 import { Category } from '../../category/models/category.model';
 import { UpdateBlogPost } from '../models/update-blog-post.model';
+import { ImageSelectorComponent } from 'src/app/shared/components/image-selector/image-selector.component';
 @Component({
   selector: 'app-edit-blogpost',
   standalone: false,
@@ -25,6 +26,7 @@ export class EditBlogpostComponent implements OnInit, OnDestroy{
   model?: BlogPost;
   selectedCategories?: string[];
   categories$?: Observable<Category[]>;
+  isImageSelectorVisible: boolean = false;
 
 
   constructor(private route: ActivatedRoute, private blogPostService: BlogPostService, private categoryService: CategoryService, private router: Router){
@@ -87,5 +89,11 @@ export class EditBlogpostComponent implements OnInit, OnDestroy{
     this.getBlogPostSubscription?.unsubscribe();
     this.updateBlogPostSubscription?.unsubscribe();
     this.deleteBlogPostSubscription?.unsubscribe();
+  }
+  openImageSelector(): void{
+    this.isImageSelectorVisible = true;
+  }
+  closeImageSelector(): void{
+    this.isImageSelectorVisible = false;
   }
 }

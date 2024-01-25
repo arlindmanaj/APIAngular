@@ -7,6 +7,7 @@ import { NavbarComponent } from './Core/components/navbar/navbar.component';
 import { CategoryListComponent } from './features/category/category-list/category-list.component';
 import { AddCategoryComponent } from './features/category/add-category/add-category.component';
 import { FormsModule } from '@angular/forms'
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ROUTES, RouterLink, RouterModule } from '@angular/router';
 import { EditCategoryComponent } from './features/category/edit-category/edit-category.component';
@@ -14,27 +15,31 @@ import { BlogpostListComponent } from './features/blog-post/blogpost-list/blogpo
 import { AddBlogpostComponent } from './features/blog-post/add-blogpost/add-blogpost.component';
 import { MarkdownModule } from 'ngx-markdown';
 import { EditBlogpostComponent } from './features/blog-post/edit-blogpost/edit-blogpost.component';
+import { ImageSelectorComponent } from "./shared/components/image-selector/image-selector.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    CategoryListComponent,
-    AddCategoryComponent,
-    EditCategoryComponent,
-    BlogpostListComponent,
-    AddBlogpostComponent,
-    EditBlogpostComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    RouterModule, // Use RouterModule instead of RouterLink if needed
-    MarkdownModule.forRoot()
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        NavbarComponent,
+        CategoryListComponent,
+        AddCategoryComponent,
+        EditCategoryComponent,
+        BlogpostListComponent,
+        AddBlogpostComponent,
+        EditBlogpostComponent,
+        ImageSelectorComponent
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        HttpClientModule,
+        RouterModule,
+        MarkdownModule.forRoot(),
+        ImageSelectorComponent,
+        ReactiveFormsModule
+    ]
 })
 export class AppModule { }
