@@ -4,4 +4,5 @@ export interface BlogImage {
     title: string;
     fileExtension: string;
     url: string;
+    
 }

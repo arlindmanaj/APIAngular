@@ -21,18 +21,18 @@ export class ImageSelectorComponent {
     const element = event.currentTarget as HTMLInputElement;
     this.file = element.files?.[0];
 
-    
+
   }
 
   uploadImage(): void {
-    if (this.file && this.fileName !== '' && this.title !== '') {
+    if (this.file  && this.fileName !== '' && this.title !== '') {
       // Image service me bo uploadin
-      this.imageService.uploadImage(this.file,this.fileName,this.title)
-      .subscribe({
-        next: (response) => {
-          console.log(response)
-        }
-      });
+      this.imageService.uploadImage(this.file, this.fileName, this.title)
+        .subscribe({
+          next: (response) => {
+            console.log(response)
+          }
+        });
     }
   }
 }
