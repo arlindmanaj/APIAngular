@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgForm, FormsModule } from '@angular/forms';
-
+import { NgForm } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './Core/components/navbar/navbar.component';
 import { CategoryListComponent } from './features/category/category-list/category-list.component';
 import { AddCategoryComponent } from './features/category/add-category/add-category.component';
-import { FormsModule } from '@angular/FormsModule'
-import { ReactiveFormsModule } from '@angular/forms';
+
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ROUTES, RouterLink, RouterModule } from '@angular/router';
 import { EditCategoryComponent } from './features/category/edit-category/edit-category.component';
@@ -40,9 +39,9 @@ import { ImageSelectorComponent } from "./shared/components/image-selector/image
         HttpClientModule,
         RouterModule,
         MarkdownModule.forRoot(),
-        ImageSelectorComponent,
+
         ReactiveFormsModule,
-        NgForm
+        //NgForm
     ]
 })
 export class AppModule { }

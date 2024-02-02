@@ -3,7 +3,7 @@ import { ImageService } from './image.service';
 
 @Component({
   selector: 'app-image-selector',
-  imports: [],
+  //imports: [],
   templateUrl: './image-selector.component.html',
   styleUrl: './image-selector.component.css'
 })
@@ -25,7 +25,7 @@ export class ImageSelectorComponent {
   }
 
   uploadImage(): void {
-    if (this.file  && this.fileName !== '' && this.title !== '') {
+    if (this.file && this.fileName !== '' && this.title !== '') {
       // Image service me bo uploadin
       this.imageService.uploadImage(this.file, this.fileName, this.title)
         .subscribe({

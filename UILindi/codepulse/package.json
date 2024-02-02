@@ -13,6 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "@angular/core": "^17.1.2",
+    "@angular/forms": "^17.1.2",
+    "@angular/platform-browser-dynamic": "^17.1.2",
+    "@angular/router": "^17.1.2",
+    "ngx-markdown": "^17.1.1",
     "prismjs": "^1.29.0"
   }
 }
