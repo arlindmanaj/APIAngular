@@ -95,9 +95,10 @@ namespace TestiCodePulse.Controllers
             }
         }
         // POST: {apibaseurl}/api/images
-        [HttpDelete]
-        [Route("{id:Guid}")]
-        public async Task<IActionResult> DeleteImage([FromRoute] Guid id)
+        //[HttpDelete]
+        //[Route("{id:Guid}")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteImage([FromRoute] int id)
         {
             var deletedImage = await imageRepository.Delete(id);
             if (deletedImage == null)
