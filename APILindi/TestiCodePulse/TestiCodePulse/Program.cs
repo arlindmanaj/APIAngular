@@ -41,7 +41,7 @@ app.UseCors(options =>
     options.AllowAnyOrigin();
     options.AllowAnyMethod();
 });
-
+ 
 app.UseAuthorization();
 
 app.UseStaticFiles(new StaticFileOptions

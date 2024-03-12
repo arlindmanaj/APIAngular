@@ -1,20 +1,31 @@
 import { Component } from '@angular/core';
 import { ImageService } from './image.service';
-
+import { OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { BlogImage } from '../../Models/blog-image.model';
+import { NgOptimizedImage } from '@angular/common'
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-image-selector',
   //imports: [],
   templateUrl: './image-selector.component.html',
   styleUrl: './image-selector.component.css'
 })
-export class ImageSelectorComponent {
+export class ImageSelectorComponent implements OnInit {
 
   private file?: File;
   fileName: string = '';
   title: string = '';
+  images$?: Observable<BlogImage[]>;
+  selectedImage?: BlogImage;
+  
+  constructor(private imageService: ImageService, private route: ActivatedRoute,
+    
+    private router: Router) {
 
-  constructor(private imageService: ImageService) {
-
+  }
+  ngOnInit(): void {
+    this.getImages();
   }
 
   onFileUploadChange(event: Event): void {
@@ -30,9 +41,29 @@ export class ImageSelectorComponent {
       this.imageService.uploadImage(this.file, this.fileName, this.title)
         .subscribe({
           next: (response) => {
-            console.log(response)
+           
+            this.getImages();
           }
         });
     }
   }
+  selectImage(image: BlogImage){
+    this.selectedImage = image;
+  }
+  deleteImage() {
+    
+    if(this.selectedImage)
+    this.imageService.deleteImage(this.selectedImage).subscribe({
+      next: (response) => {
+        this.router.navigateByUrl('admin/images')
+      }
+    })
+}
+
+
+  private getImages(){
+    this.images$ = this.imageService.getAllImages();
+
+  }
+
 }

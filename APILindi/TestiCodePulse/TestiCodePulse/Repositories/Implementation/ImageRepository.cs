@@ -1,4 +1,5 @@
-﻿using TestiCodePulse.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using TestiCodePulse.Data;
 using TestiCodePulse.Models.Domain;
 using TestiCodePulse.Repositories.Interface;
 
@@ -16,6 +17,25 @@ namespace TestiCodePulse.Repositories.Implementation
             this.httpContextAccessor = httpContextAccessor;
             this.dbContext = dbContext;
         }
+
+        public async Task<BlogImage> Delete(Guid id)
+        {
+            var existingImage = await dbContext.BlogImages.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(existingImage  == null)
+            {
+                return null;
+            }
+            dbContext.BlogImages.Remove(existingImage);
+            await dbContext.SaveChangesAsync();
+            return existingImage;
+        }
+
+        public async Task<IEnumerable<BlogImage>> GetAll()
+        {
+            return await dbContext.BlogImages.ToListAsync();
+        }
+
         public async Task<BlogImage> Upload(IFormFile file, BlogImage blogImage)
         {
             // UPload image to api/images (folderi)

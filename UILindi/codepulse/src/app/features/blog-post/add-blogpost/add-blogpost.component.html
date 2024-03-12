@@ -34,7 +34,9 @@
             </div>
 
             <div class="mt-3">
-                <label for="featuredImageUrl" class="form-label">Featured Image</label>
+                <label for="featuredImageUrl" class="form-label">Featured Image
+                    <button type="button" class="btn btn-warning" (click)="openImageSelector()">Select Image</button>
+                </label>
 
                 <ng-container *ngIf="model.featuredImageUrl != '' ">
                     <div>
@@ -42,10 +44,11 @@
                     </div>
                 </ng-container>
 
+                
+                <app-image-selector *ngIf="isImageSelectorVisible"></app-image-selector>
 
 
-
-                <input type="text" id="featuredImageUrl" name="featuredImageUrl" class="form-control"
+                <input type="text" id="featuredImageUrl" name="featuredImageUrl" class="form-control" placeholder="Enter image URL"
                     [(ngModel)]="model.featuredImageUrl">
             </div>
 

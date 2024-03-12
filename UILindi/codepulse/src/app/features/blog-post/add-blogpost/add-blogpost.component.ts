@@ -10,15 +10,19 @@ import { MarkdownModule } from 'ngx-markdown';
 import { CategoryService } from './../../category/services/category.service';
 import { Observable } from 'rxjs';
 import { Category } from '../../category/models/category.model';
-
+import { ImageSelectorComponent } from 'src/app/shared/components/image-selector/image-selector.component';
 @Component({
   selector: 'app-add-blogpost',
+  standalone: false,
   templateUrl: './add-blogpost.component.html',
   styleUrls: ['./add-blogpost.component.css']
 })
 export class AddBlogpostComponent implements OnInit {
   model: AddBlogPost;
   categories$?: Observable<Category[]>;
+  isImageSelectorVisible: boolean = false;
+
+
   constructor(private BlogPostService: BlogPostService, private router: Router,
     private categoryService: CategoryService) {
 
@@ -44,6 +48,13 @@ export class AddBlogpostComponent implements OnInit {
         this.router.navigateByUrl('/admin/blogposts');
       }
     })
+  }
+  openImageSelector(): void{
+    this.isImageSelectorVisible = true;
+    console.log("Allo");
+  }
+  closeImageSelector(): void{
+    this.isImageSelectorVisible = false;
   }
 
 }
