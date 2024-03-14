@@ -50,16 +50,28 @@ export class ImageSelectorComponent implements OnInit {
   selectImage(image: BlogImage){
     this.selectedImage = image;
   }
-  deleteImage() {
+  
+    deleteImageOLD() {
     
-    if(this.selectedImage)
-    this.imageService.deleteImage(this.selectedImage).subscribe({
-      next: (response) => {
-        this.router.navigateByUrl('admin/images')
-      }
-    })
-}
+      if(this.selectedImage)
+      this.imageService.deleteImage(this.selectedImage).subscribe({
+        next: (response) => {
+          this.router.navigateByUrl('admin/images')
+        }
+      })
+    }
 
+    deleteImage(imageId: number) {
+    // Assuming you have a deleteImage method in your image service
+    this.imageService.deleteImage(imageId).subscribe(() => {
+      // Optionally, you can refresh the images list after deletion
+      this.images$ = this.imageService.getImages();
+    }, error => {
+      console.error('Error deleting image:', error);
+      // Handle error, show message, etc.
+    });
+  }
+  
 
   private getImages(){
     this.images$ = this.imageService.getAllImages();
