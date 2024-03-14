@@ -23,7 +23,12 @@ export class ImageService {
   getAllImages() : Observable<BlogImage[]>{
     return this.http.get<BlogImage[]>(`${environment.apiBaseUrl}/api/images`);
   }
-  deleteImage(imageId: BlogImage): Observable<BlogImage> {
+  
+  deleteImageOLD(imageId: BlogImage): Observable<BlogImage> {
     return this.http.delete<BlogImage>(`${environment.apiBaseUrl}/api/images/${imageId}`);
-}
+  }
+
+  deleteImage(imageId: id): Observable<BlogImage> {
+    return this.http.delete<BlogImage>(`${environment.apiBaseUrl}/api/images/${imageId}`);
+  }
 }
