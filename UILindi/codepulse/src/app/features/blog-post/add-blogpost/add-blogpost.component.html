@@ -45,7 +45,7 @@
                 </ng-container>
 
                 
-                <app-image-selector *ngIf="isImageSelectorVisible"></app-image-selector>
+              
 
 
                 <input type="text" id="featuredImageUrl" name="featuredImageUrl" class="form-control" placeholder="Enter image URL"
@@ -89,4 +89,9 @@
     </form>
 
 
+</div>
+
+<div class="images-container-modal" [ngClass]="{'d-block': isImageSelectorVisible, 'd-none': !isImageSelectorVisible}">
+    <button type="button" class="btn btn-danger" style="position: fixed; top: 15px; right: 50px;" (click)="closeImageSelector()">Close</button>
+    <app-image-selector></app-image-selector>
 </div>

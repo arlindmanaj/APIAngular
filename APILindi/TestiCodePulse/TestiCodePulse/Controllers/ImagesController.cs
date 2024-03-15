@@ -98,7 +98,7 @@ namespace TestiCodePulse.Controllers
         //[HttpDelete]
         //[Route("{id:Guid}")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteImage([FromRoute] int id)
+        public async Task<IActionResult> DeleteImage([FromRoute] Guid id)
         {
             var deletedImage = await imageRepository.Delete(id);
             if (deletedImage == null)

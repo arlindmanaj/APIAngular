@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ImageService } from './image.service';
 import { OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BlogImage } from '../../Models/blog-image.model';
 import { NgOptimizedImage } from '@angular/common'
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-image-selector',
   //imports: [],
@@ -18,7 +19,7 @@ export class ImageSelectorComponent implements OnInit {
   title: string = '';
   images$?: Observable<BlogImage[]>;
   selectedImage?: BlogImage;
-  
+  @ViewChild ('form', {static: false}) imageUploadForm?: NgForm;
   constructor(private imageService: ImageService, private route: ActivatedRoute,
     
     private router: Router) {
@@ -41,24 +42,16 @@ export class ImageSelectorComponent implements OnInit {
       this.imageService.uploadImage(this.file, this.fileName, this.title)
         .subscribe({
           next: (response) => {
-           
+           this.imageUploadForm?.resetForm();
             this.getImages();
           }
         });
     }
   }
-  selectImage(image: BlogImage){
-    this.selectedImage = image;
+
+  selectImage(image: BlogImage): void {
+    this.imageService.selectImage(image);
   }
-  deleteImage() {
-    
-    if(this.selectedImage)
-    this.imageService.deleteImage(this.selectedImage).subscribe({
-      next: (response) => {
-        this.router.navigateByUrl('admin/images')
-      }
-    })
-}
 
 
   private getImages(){

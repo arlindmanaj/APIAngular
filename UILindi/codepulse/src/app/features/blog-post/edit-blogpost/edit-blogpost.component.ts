@@ -11,6 +11,7 @@ import { CategoryService } from '../../category/services/category.service';
 import { Category } from '../../category/models/category.model';
 import { UpdateBlogPost } from '../models/update-blog-post.model';
 import { ImageSelectorComponent } from 'src/app/shared/components/image-selector/image-selector.component';
+import { ImageService } from 'src/app/shared/components/image-selector/image.service';
 @Component({
   selector: 'app-edit-blogpost',
   standalone: false,
@@ -27,9 +28,14 @@ export class EditBlogpostComponent implements OnInit, OnDestroy{
   selectedCategories?: string[];
   categories$?: Observable<Category[]>;
   isImageSelectorVisible: boolean = false;
+  imageSelectSubscription?: Subscription;
 
-
-  constructor(private route: ActivatedRoute, private blogPostService: BlogPostService, private categoryService: CategoryService, private router: Router){
+  constructor(
+    private route: ActivatedRoute,
+    private blogPostService: BlogPostService,
+    private categoryService: CategoryService,
+    private router: Router,
+    private imageService: ImageService){
 
   }
  
@@ -46,8 +52,18 @@ export class EditBlogpostComponent implements OnInit, OnDestroy{
             this.model = response;
             this.selectedCategories = response.categories.map(x => x.id);
           }
-        })
-      }
+        });
+       
+      };
+
+      this.imageSelectSubscription = this.imageService.onSelectImage().subscribe({
+        next:(response) => {
+          if(this.model){
+            this.model.featuredImageUrl = response.url;
+            this.isImageSelectorVisible = false;
+          }
+        }
+      })
       
     }
    })
@@ -89,6 +105,7 @@ export class EditBlogpostComponent implements OnInit, OnDestroy{
     this.getBlogPostSubscription?.unsubscribe();
     this.updateBlogPostSubscription?.unsubscribe();
     this.deleteBlogPostSubscription?.unsubscribe();
+    this.imageSelectSubscription?.unsubscribe();
   }
   openImageSelector(): void{
     this.isImageSelectorVisible = true;
