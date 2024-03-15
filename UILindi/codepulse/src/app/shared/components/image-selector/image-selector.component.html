@@ -13,7 +13,9 @@
                         ;" class="me-1 bg-white d-flex align-items-center flex-column border p-3">
                             <img [src]="image.url" [title]="image.title" style="height: 100px;">
                             <span class="mt-1">{{image.title}}</span>
-                        
+                            
+                          <button class="btn btn-danger mt-2" (click)="deleteImage(image.id)">Delete</button>                        
+
                         </div>
                     </div>
                 </ng-container>
