@@ -19,6 +19,7 @@ export class ImageSelectorComponent implements OnInit {
   title: string = '';
   images$?: Observable<BlogImage[]>;
   selectedImage?: BlogImage;
+  
   @ViewChild ('form', {static: false}) imageUploadForm?: NgForm;
   constructor(private imageService: ImageService, private route: ActivatedRoute,
     
@@ -42,41 +43,39 @@ export class ImageSelectorComponent implements OnInit {
       this.imageService.uploadImage(this.file, this.fileName, this.title)
         .subscribe({
           next: (response) => {
+            
            this.imageUploadForm?.resetForm();
+           
             this.getImages();
+           
+           
+          
           }
         });
     }
   }
 
   selectImage(image: BlogImage): void {
-    this.imageService.selectImage(image);
-  }
-<<<<<<< HEAD
-=======
-  
-    deleteImageOLD() {
     
-      if(this.selectedImage)
-      this.imageService.deleteImage(this.selectedImage).subscribe({
-        next: (response) => {
-          this.router.navigateByUrl('admin/images')
-        }
-      })
-    }
->>>>>>> c9c4f6ece8eb6bb0b7fc6252052715ee18c9b984
+    this.imageService.selectImage(image);
+   
+  }
+  
+ 
 
-    deleteImage(imageId: number) {
+    deleteImage(imageId: string, event : Event ) {
+      event.stopPropagation();
     // Assuming you have a deleteImage method in your image service
     this.imageService.deleteImage(imageId).subscribe(() => {
       // Optionally, you can refresh the images list after deletion
-      this.images$ = this.imageService.getImages();
+      this.images$ = this.imageService.getAllImages();
+      
     }, error => {
       console.error('Error deleting image:', error);
       // Handle error, show message, etc.
     });
   }
-  
+
 
   private getImages(){
     this.images$ = this.imageService.getAllImages();

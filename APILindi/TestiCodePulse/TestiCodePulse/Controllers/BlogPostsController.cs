@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TestiCodePulse.Models.Domain;
 using TestiCodePulse.Models.DTO;
@@ -22,7 +23,7 @@ namespace TestiCodePulse.Controllers
 
         //POST : {apibaseurl}/api/blogposts
         [HttpPost]
-
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateBlogPost([FromBody] CreateBlogPostRequestDto request)
         {
             // dto to domain
@@ -182,7 +183,7 @@ namespace TestiCodePulse.Controllers
         //PUT : {apibaseurl}/api/blogposts/{id}
         [HttpPut]
         [Route("{id:Guid}")]
-
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> UpdateBlogPostById([FromRoute] Guid id, UpdateBlogPostRequestDto request)
         {
             // Convert Dto To domain
@@ -239,6 +240,7 @@ namespace TestiCodePulse.Controllers
         //Delete : {apibaseurl}/api/blogposts/{id}
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteBlogPost([FromRoute] Guid id)
         {
             var deletedBlogPost = await blogPostRepository.DeleteAsync(id);
