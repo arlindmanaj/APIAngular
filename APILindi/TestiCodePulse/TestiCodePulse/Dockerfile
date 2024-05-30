@@ -1,15 +1,26 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
-WORKDIR /App
+# Use the official ASP.NET image as the base image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+WORKDIR /app
+EXPOSE 80
 
-# Copy everything
-COPY . ./
-# Restore as distinct layers
+# Use the official ASP.NET SDK image for building the application
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY ["TestiCodePulse", "/src/TestiCodePulse"]
+WORKDIR "/src/TestiCodePulse"
 RUN dotnet restore
-# Build and publish a release
-RUN dotnet publish -c Release -o out
+RUN dotnet build -c Release -o /app/build
 
-# Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
-WORKDIR /App
-COPY --from=build-env /App/out .
-ENTRYPOINT ["dotnet", "DotNet.Docker.dll"]
+# Copy the Images directory into the Docker image
+COPY ["APILindi/TestiCodePulse/TestiCodePulse/Images", "/app/Images"]
+
+# Build the application
+FROM build AS publish
+RUN dotnet publish -c Release -o /app/publish
+
+# Final stage / production stage
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+
+ENTRYPOINT ["dotnet", "TestiCodePulse.dll"]
