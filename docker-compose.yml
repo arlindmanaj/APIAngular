@@ -2,10 +2,10 @@
 services:
   api:
     build:
-      context: ./APILindi
+      context: ./APILindi/TestiCodePulse
       dockerfile: Dockerfile
     ports:
-      - "5000:80"
+      - "7112:80"
    
     networks:
       - app-network

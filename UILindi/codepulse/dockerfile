@@ -17,6 +17,8 @@ COPY . .
 # Build the Angular app in production mode
 RUN ng build --configuration production
 
+
+
 ### STAGE 2: Setup ###
 FROM nginx:alpine
 
@@ -27,8 +29,9 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy the built Angular app to the nginx web root directory
-COPY --from=builder /ng-app/dist/ /usr/share/nginx/html
+COPY --from=builder /ng-app/dist/codepulse /usr/share/nginx/html
 
+RUN chmod -R 755 /usr/share/nginx/html
 # Expose port 80
 EXPOSE 80
 
