@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 using TestiCodePulse.Models.Domain;
 using TestiCodePulse.Models.DTO;
 using TestiCodePulse.Repositories.Interface;
@@ -17,7 +18,33 @@ namespace TestiCodePulse.Controllers
             this.imageRepository = imageRepository;
         }
 
-       
+        //GET: {apibaseurl}/api/images/
+        [HttpGet]
+        public async Task<IActionResult> GetAllImages()
+        {
+            //call image repo to get all images
+            var images = await imageRepository.GetAll();
+            //Convert domain to dto
+            var response = new List<BlogImageDto>();
+            foreach(var image in images)
+            {
+                response.Add(new BlogImageDto
+                {
+                    Id = image.Id,
+                    Title = image.Title,
+                    DateCreated = image.DateCreated,
+                    FileExtension = image.FileExtension,
+                    FileName = image.FileName,
+                    Url = image.Url
+
+
+                });
+
+            }
+
+            return Ok(response);
+
+        }
 
         // POST: {apibaseurl}/api/images\
         [HttpPost]
@@ -57,7 +84,7 @@ namespace TestiCodePulse.Controllers
 
         private void ValidateFileUpload(IFormFile file)
         {
-            var allowedExtensions = new string[] { ".jpg", ".jpeg", ".png" };
+            var allowedExtensions = new string[] { ".jpg", ".jpeg", ".png" , ".PNG"};
             if(!allowedExtensions.Contains(Path.GetExtension(file.FileName).ToLower())) 
             {
                 ModelState.AddModelError("file", "Unsupported file format");
@@ -66,6 +93,25 @@ namespace TestiCodePulse.Controllers
             {
                 ModelState.AddModelError("file", "File Size cannot be more than 10mb");
             }
+        }
+        // POST: {apibaseurl}/api/images
+        //[HttpDelete]
+        //[Route("{id:Guid}")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteImage([FromRoute] Guid id)
+        {
+            var deletedImage = await imageRepository.Delete(id);
+            if (deletedImage == null)
+            {
+                return NotFound();
+            }
+            var response = new BlogImageDto
+            {
+                Id = deletedImage.Id,
+                
+            };
+
+            return Ok(response);
         }
     }
 }

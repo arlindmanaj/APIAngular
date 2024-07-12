@@ -1,20 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ImageService } from './image.service';
-
+import { OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { BlogImage } from '../../Models/blog-image.model';
+import { NgOptimizedImage } from '@angular/common'
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-image-selector',
   //imports: [],
   templateUrl: './image-selector.component.html',
   styleUrl: './image-selector.component.css'
 })
-export class ImageSelectorComponent {
+export class ImageSelectorComponent implements OnInit {
 
   private file?: File;
   fileName: string = '';
   title: string = '';
+  images$?: Observable<BlogImage[]>;
+  selectedImage?: BlogImage;
+  
+  @ViewChild ('form', {static: false}) imageUploadForm?: NgForm;
+  constructor(private imageService: ImageService, private route: ActivatedRoute,
+    
+    private router: Router) {
 
-  constructor(private imageService: ImageService) {
-
+  }
+  ngOnInit(): void {
+    this.getImages();
   }
 
   onFileUploadChange(event: Event): void {
@@ -30,9 +43,43 @@ export class ImageSelectorComponent {
       this.imageService.uploadImage(this.file, this.fileName, this.title)
         .subscribe({
           next: (response) => {
-            console.log(response)
+            
+           this.imageUploadForm?.resetForm();
+           
+            this.getImages();
+           
+           
+          
           }
         });
     }
   }
+
+  selectImage(image: BlogImage): void {
+    
+    this.imageService.selectImage(image);
+   
+  }
+  
+ 
+
+    deleteImage(imageId: string, event : Event ) {
+      event.stopPropagation();
+    // Assuming you have a deleteImage method in your image service
+    this.imageService.deleteImage(imageId).subscribe(() => {
+      // Optionally, you can refresh the images list after deletion
+      this.images$ = this.imageService.getAllImages();
+      
+    }, error => {
+      console.error('Error deleting image:', error);
+      // Handle error, show message, etc.
+    });
+  }
+
+
+  private getImages(){
+    this.images$ = this.imageService.getAllImages();
+
+  }
+
 }

@@ -41,6 +41,11 @@ namespace TestiCodePulse.Repositories.Implementation
          return  await dbContext.BlogPosts.Include(x=> x.Categories).FirstOrDefaultAsync(x=> x.Id == id);
         }
 
+        public async Task<BlogPost?> GetByUrlHandle(string urlHandle)
+        {
+            return await dbContext.BlogPosts.Include(x => x.Categories).FirstOrDefaultAsync(x => x.UrlHandle == urlHandle);
+        }
+
         public async Task<BlogPost?> UpdateAsync(BlogPost blogPost)
         {
             var existingBlogPost = await dbContext.BlogPosts.Include(blogPost => blogPost.Categories).FirstOrDefaultAsync(x => x.Id == blogPost.Id);

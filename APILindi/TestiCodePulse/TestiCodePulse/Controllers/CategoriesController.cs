@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TestiCodePulse.Data;
 using TestiCodePulse.Models.Domain;
@@ -23,6 +24,7 @@ namespace TestiCodePulse.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateCategory(CreateCategoryRequestDto request)
         {
             // Map DTO to Domain Model
@@ -55,6 +57,7 @@ namespace TestiCodePulse.Controllers
 
         // GET : https://localhost:7112/api/Categories -> Pathi per Angular
         [HttpGet]
+        
         public async Task<IActionResult> GetAllCategories()
         {
            var categories = await categoryRepository.GetAllAsync();
@@ -100,6 +103,7 @@ namespace TestiCodePulse.Controllers
         // PUT :   https://localhost:7112/api/Categories{id}
         [HttpPut]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> EditCategory([FromRoute] Guid id, UpdateCategoryRequestDto request )
         {
             // Convert DTO to Domain
@@ -129,7 +133,7 @@ namespace TestiCodePulse.Controllers
         // Delete : https://localhost:7112/api/Categories{id}
         [HttpDelete]
         [Route("{id:Guid}")]
-
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> DeleteCategory([FromRoute]Guid id)
         {
             var category = await categoryRepository.DeleteAsync(id);
