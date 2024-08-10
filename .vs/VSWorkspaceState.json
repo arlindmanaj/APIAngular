@@ -2,7 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\APILindi",
-    "\\APILindi\\TestiCodePulse"
+    "\\APILindi\\TestiCodePulse",
+    "\\APILindi\\TestiCodePulse\\TestiCodePulse"
   ],
+  "SelectedNode": "\\APILindi\\TestiCodePulse\\TestiCodePulse\\Program.cs",
   "PreviewInSolutionExplorer": false
 }
