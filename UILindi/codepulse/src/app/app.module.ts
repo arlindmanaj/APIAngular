@@ -34,7 +34,7 @@ import { LoginComponent } from './features/auth/login/login.component';
         ImageSelectorComponent,
         HomeComponent,
         BlogDetailsComponent,
-        LoginComponent
+
     ],
     providers: [],
     bootstrap: [AppComponent],
